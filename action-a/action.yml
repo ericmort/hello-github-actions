@@ -1,13 +1,13 @@
-env:
-  REGISTRY_NAME: acrtest1512
-  CLUSTER_NAME: 
-  CLUSTER_RESOURCE_GROUP: rg-test-devops
-  NAMESPACE: 
-  APP_NAME: myApp
-                    
 jobs:
   build:
     runs-on: ubuntu-latest
+  env:
+    REGISTRY_NAME: acrtest1512
+    CLUSTER_NAME: a
+    CLUSTER_RESOURCE_GROUP: rg-test-devops
+    NAMESPACE: asd 
+    APP_NAME: myApp
+                    
     steps:
     - uses: actions/checkout@main
     - uses: azure/docker-login@v1
