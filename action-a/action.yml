@@ -1,16 +1,20 @@
-name: "Hello Actions"
-description: "Greet someone"
-author: "octocat@github.com"
-
-inputs:
-  MY_NAME:
-    description: "Who to greet"
-    required: true
-    default: "World"
-runs:
-  using: "docker"
-  image: "Dockerfile"
-
-branding:
-  icon: "mic"
-  color: "purple"
+env:
+  REGISTRY_NAME: acrtest1512
+  CLUSTER_NAME: 
+  CLUSTER_RESOURCE_GROUP: rg-test-devops
+  NAMESPACE: 
+  APP_NAME: myApp
+                    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    - uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+        - run: |
+          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+          docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
